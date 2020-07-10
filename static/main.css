@@ -1,0 +1,12 @@
+body {color: #BC8D62}
+
+img {
+    display: block;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    text-align: center;
+}
