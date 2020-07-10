@@ -12,7 +12,8 @@ RUN go mod download
 COPY . .
 # Build the Go app
 
-RUN chmod +x ./generate-keys.sh && ./generate-keys.sh ./ssl/
+RUN chmod +x ./generate-keys.sh
+RUN ./generate-keys.sh ./ssl/
 RUN go build -o main .
 # Expose port 8080 to the outside world
 EXPOSE 8080
