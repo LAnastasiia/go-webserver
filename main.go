@@ -9,7 +9,7 @@ import (
 
 const (
 	certFilePath = "./ssl/tls.crt"
-	keyFilePath = "./ssl/tls.key"
+	keyFilePath  = "./ssl/tls.key"
 )
 
 // Middleware contains code for pre-/post-processing that is common for all the requests (e.g. logging).
@@ -22,6 +22,7 @@ func middlewareWrapper(handler http.Handler) http.Handler {
 }
 
 func main() {
+
 	// Add multiplexer for mapping the URL patterns to handler functions.
 	prodMux := http.NewServeMux()
 	fs := http.FileServer(http.Dir("static"))
