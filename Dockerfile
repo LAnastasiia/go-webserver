@@ -1,4 +1,9 @@
-FROM golang:latest
+FROM alpine:latest
+
+RUN apk add --no-cache git
+RUN apk add --no-cache go
+RUN apk add --no-cache bash
+RUN apk add --no-cache openssl
 
 LABEL maintainer="Anastasiia <anastasiial@noogler.google.com>"
 
@@ -12,9 +17,13 @@ RUN go mod download
 COPY . .
 # Build the Go app
 
+RUN mkdir -p ssl
 RUN chmod +x ./generate-keys.sh
 RUN ./generate-keys.sh ./ssl/
-RUN go build -o main .
+
+RUN CGO_ENABLED=0 go build -a -installsuffix cgo
+RUN CGO_ENABLED=0 go build -o main .
+
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
