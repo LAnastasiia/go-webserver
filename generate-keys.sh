@@ -10,7 +10,7 @@ cd "$key_dir" || exit
 # Generate the CA cert and private key
 openssl req -nodes -new -x509 -keyout ca.key -out ca.crt -subj "/CN=Admission Controller Webhook Demo CA"
 
-# Generate the private key for the webhook server
+# Generate the private key for the webserver
 openssl genrsa -out tls.key 2048
 
 # Generate a Certificate Signing Request (CSR) for the private key, and sign it with the private key of the CA.
