@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      run: webserver
+  template:
+    metadata:
+      labels:
+        run: webserver
+    spec:
+      containers:
+        - image: http://gcr.io/anastasiial2020/go-webserver
+          imagePullPolicy: IfNotPresent
+          name: webserver
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            volumeMounts:
+              - name: webserver-tls-certs
+                mountPath: /run/secrets/tls
+                readOnly: true
+      volumes:
+        - name: webserver-tls-certs
+          secret:
+            secretName: webserver-server-tls
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-webserver-service
+spec:
+  selector:
+    app: go-webserver
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376

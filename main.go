@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	certFilePath = "./ssl/tls.crt"
-	keyFilePath  = "./ssl/tls.key"
+	certFilePath = "/run/secrets/tls.crt"
+	keyFilePath  = "/run/secrets/tls.key"
 )
 
 // Middleware contains code for pre-/post-processing that is common for all the requests (e.g. logging).
