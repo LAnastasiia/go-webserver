@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-webserver
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      run: go-webserver
+  template:
+    metadata:
+      labels:
+        run: go-webserver
+    spec:
+      containers:
+      - name: server
+        image: http://gcr.io/anastasiial2020/go-webserver
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+        volumeMounts:
+        - name: server-tls-volume
+          mountPath: /run/secrets/tls
+          readOnly: true
+      volumes:
+        - name: server-tls-volume
+          secret:
+            secretName: tls-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-webserver-service
+spec:
+  selector:
+    app: go-webserver
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+
+---
+#apiVersion: v1
+#kind: Secret
+#metadata:
+#  name: tls-secret
+#type: kubernetes.io/tls
+#data:
+#  key: tls.key
+#  certificate: tls.crt
