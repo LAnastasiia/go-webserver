@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: http://gcr.io/anastasiial2020/go-webserver
+        image: gcr.io/anastasiial2020/go-webserver
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8080

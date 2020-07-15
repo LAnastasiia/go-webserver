@@ -5,6 +5,7 @@ set -euo pipefail
 key_dir="$(mktemp -d)"
 ./generate-keys.sh "$key_dir"
 
+kubectl delete secret tls-secret || true
 kubectl create secret tls tls-secret \
   --cert "${key_dir}/tls.crt" \
   --key "${key_dir}/tls.key"
