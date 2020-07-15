@@ -9,7 +9,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-RUN go build -a -installsuffix cgo -o main .
+RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o main .
 
 
 # Create a smaller, 'production' container that will contain only our app.
