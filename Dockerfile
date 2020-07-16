@@ -1,4 +1,4 @@
-# First define a 'builder' container with all requirements installed.
+# First define a 'builder' with all requirements installed.
 FROM golang:1.14 as builder
 
 LABEL maintainer="Anastasiia <anastasiial@noogler.google.com>"
@@ -12,11 +12,8 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o main .
 
 
-# Create a smaller, 'production' container that will contain only our app.
-FROM alpine:latest
-WORKDIR /root/
+# Create a smaller, 'production' that will contain only our app.
+FROM scratch
 COPY --from=builder /app/main .
-
 EXPOSE 8080
-
-CMD ["./main"]
+ENTRYPOINT ["/main"]
