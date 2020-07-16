@@ -12,4 +12,6 @@ kubectl create secret tls tls-secret \
 
 rm -rf "$key_dir"
 
-kubectl apply -f resources-compose.yaml
+image_tag="${1:-'distroless'}"
+echo "$image_tag"
+sed -e 's@${image_tag}@'"$image_tag"'@g' <"./resources-compose.yaml.template" | kubectl apply -f -
